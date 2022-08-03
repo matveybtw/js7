@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <style>
+        #reg {
+            align-items: center;
+            text-align: center;
+            margin-left: 33%;
+            margin-right: 33%;
+        }
+
+        .labelinput {
+            text-align: left;
+            display: inline-block;
+            margin-right: 50px;
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 250px;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="reg" method="post">
+        <h1>Registration</h1>
+        <div class="labelinput">
+            <label for="email">Email:</label>
+            <br>
+            <input id="email">
+        </div>
+        <div class="labelinput">
+            <label for="password">Password:</label>
+            <br>
+            <input id="password" type="password">
+        </div>
+        <div class="labelinput">
+            <label for="repeatpassword">Repeat password:</label>
+            <br>
+            <input id="repeatpassword" type="password">
+        </div>
+        <br>
+        <button>Sign Up</button>
+    </form>
+    <script>
+        if(localStorage.getItem("email"))
+        {
+            document.location.href="info.html";
+        }
+        let emailrexgex = /^([a-z.\-_]){3,}@[a-z]{2,}\.[a-z]{2,3}$/;
+        document.addEventListener("DOMContentLoaded", function () {
+            let form = document.querySelector("#reg");
+            let email = form.querySelector("#email");
+            let password = form.querySelector("#password");
+            let repeatpassword = form.querySelector("#repeatpassword");
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+                mail = email.value;
+                pass = password.value;
+                rpass = repeatpassword.value;
+                let valid = true;
+                if (!(mail != "" && emailrexgex.test(mail))) {
+                    alert("Неправильна пошта.");
+                    valid = false;
+                }
+                if (!(pass != "" && pass.length >= 6)) {
+                    alert("Неправильний пароль.");
+                    valid = false;
+                }
+                if(rpass!=pass)
+                {
+                    alert("Ви повторно ввели неправильний пароль.");
+                    valid = true;
+                }
+                if (valid) {
+                    localStorage.setItem("email", mail);
+                    localStorage.setItem("password", pass);
+                    document.location.href="info.html";
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
